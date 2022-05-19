@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Single Event</title>
+</head>
+<body>
+    <header>
+        <a href="/"><button>Home</button></a>
+        <h4>Events</h4>
+        <a href="/events/"><button> Events</button></a>
+      </header>
+
+      <h3>Event Information</h3>
+      <div class="single_page">
+    
+    
+     <p>Title : <%=events.title%></p>
+     <p>Summary: <%=events.summary%></p>
+     <p> Host : <%=events.host%></p>
+     <p> Start_date : <%=start_date%></p>
+     <p> End_date : <%=end_date%></p>
+     <p> Event_category : <%=events.event_category%></p>
+     <p>  Location : <%=events.location%></p>
+     <p>Likes : <%=events.likes%></p>
+     <div class="btn"><a href="/events/<%=events.id%>/like"><button>Like</button></a>
+        <a href="/events/<%=events.id%>/dislike"><button>Dislike</button></a>
+        <a href="/events/<%=events.id%>/edit"><button>Edit</button></a>
+        <a href="/events/<%=events.id%>/delete"><button>Delete</button></a>
+    </div>
+     
+
+      <h2>Remarks</h2>
+      <form action = "/events/<%=events.id%>/remark" method="POST">
+          <input type="text" name="title" id="" placeholder="Enter title"> <br> <br>
+          <input type="text" name="author" id="" placeholder="Enter author"> <br>  <br>
+          <button type="submit">Add Remark</button>
+      </form>
+
+      <%events.remarkID.forEach((remark) => {%>
+        <p>Title :  <%=remark.title%></p>
+        <p>Author : <%=remark.author%></p>
+        <p>Likes :  <%=remark.likes%></p>
+        <div class="btn"> <a href="/remarks/<%=remark.id%>/likes"><button>Likes</button></a>
+            <a href="/remarks/<%=remark.id%>/dislikes"><button>Deslike</button></a>
+            <a href="/remarks/<%=remark.id%>/edit"><button>Edit</button></a>
+            <a href="/remarks/<%=remark.id%>/delete"><button>Delete</button></a></div>
+       
+      <%})%>
+      </div>
+</body>
+</html>

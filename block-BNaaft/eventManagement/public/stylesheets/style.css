@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+header {
+  background-color: #00b7ff;
+  padding: 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  padding: 10px 22px;
+  border: none;
+  outline: none;
+  background-color: blueviolet;
+  border-radius: 3px;
+  color: white;
+  font-weight: 700;
+}
+body {
+  background-color: gainsboro;
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 170px;
+  color: black;
+  font-size: 40px;
+}
+
+.add_form {
+  background-color: white;
+  text-align: center;
+  width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 3px;
+}
+h2 {
+  text-align: center;
+  padding: 40px 0;
+  font-weight: 800;
+  font-size: 30px;
+}
+input {
+  width: 98%;
+  height: 35px;
+  /* padding-left: 10px;  */
+  border-color: blueviolet;
+  border-radius: 3px;
+  color: gray;
+}
+
+input[type] {
+  padding-left: 10px;
+}
+.single_page {
+  width: 500px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+}
+p {
+  width: 100%;
+  border-bottom: 2px solid gray;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 25px;
+}
+h3 {
+  text-align: center;
+  font-size: 25px;
+  padding: 15px 0px;
+}
+
+.btn {
+  padding-top: 30px;
+}
+
+aside {
+  width: 400px;
+}
+.events {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 60px;
+}
+.abc {
+  width: 380px;
+}
+select {
+  width: 240px;
+  height: 37px;
+  border-color: blueviolet;
+  border-radius: 3px;
+}
+.btn2 {
+  width: 100%;
+}
+
+h4 {
+  font-size: 30px;
+  font-weight: 800;
+}
+.para {
+  border-bottom: none;
+}

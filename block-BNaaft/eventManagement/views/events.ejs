@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <title>Events</title>
+  </head>
+  <body>
+    <header>
+      <a href="/"><button>Home</button></a>
+      <h4>Events</h4>
+      <a href="/events/new"><button>Add Events</button></a>
+    </header>
+
+    <div class="events">
+      <section>
+        <%events.forEach((event) => {%>
+        <p class="para">Title : <%=event.title%></p>
+        <a class="link" href="/events/<%=event.id%>"><button>More</button></a>
+        <% }) %>
+      </section>
+
+      <aside>
+        <form action="/events/filters" method="GET">
+          <select name="event_category" id="">
+            <option value="">Select</option>
+            <%catageory.forEach((event) => {%>
+            <option><%=event%></option>
+            <% })%>
+          </select>
+
+          <button type="submit">filter by catagery</button>
+        </form>
+        <br />
+        <form action="/events/filters" method="GET">
+          <select name="location" id="">
+            <option value="">Select</option>
+            <%location.forEach((event) => {%>
+
+            <option><%=event%></option>
+            <% })%>
+          </select>
+          <button type="submit">Filter by location</button>
+        </form>
+        <br />
+        <form action="/events/filters" method="GET">
+          <input class="abc" type="date" name="start_date" /> <br /><br />
+          <input class="abc" type="date" name="end_date" /> <br /><br />
+          <button class="btn2" type="submit">Filter date</button>
+        </form>
+      </aside>
+    </div>
+  </body>
+</html>
