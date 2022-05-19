@@ -3,7 +3,6 @@ var router = express.Router();
 var Events = require("../modals/events");
 var Remark = require("../modals/remark");
 var moment = require("moment");
-var auth = require("../middlewares/auth");
 /* GET users listing. */
 
 //  create route
@@ -23,10 +22,30 @@ router.post("/", (req, res, next) => {
 
 // read route
 
-router.get("/", auth.getLocationAndCatageory, (req, res, next) => {
+router.get("/", (req, res, next) => {
   Events.find({}, (err, events) => {
-    res.render("events.ejs", { events });
+    Events.distinct("event_category", (err, evs) => {
+      console.log(evs);
+      Events.distinct("location", (err, evsa) => {
+        console.log(evsa);
+        res.render("events.ejs", { events, evs, evsa });
+      });
+    });
   });
+});
+
+router.get("/:id", (req, res, next) => {
+  var id = req.params.id;
+  Events.findById(id)
+    .populate("remarkID")
+    .exec((err, events) => {
+      var start_date = moment(events.start_date)
+        .format("DD/MM/YYYY")
+        .slice(0, 10);
+      var end_date = moment(events.end_date).format("DD/MM/YYYY").slice(0, 10);
+      if (err) return next(err);
+      res.render("singleEvent", { events, start_date, end_date });
+    });
 });
 
 // Edit route
@@ -63,7 +82,7 @@ router.get("/:id/like", (req, res, next) => {
   var id = req.params.id;
 
   Events.findByIdAndUpdate(id, { $inc: { likes: 1 } }, (err, event) => {
-    //console.log(event);
+    console.log(event);
     if (err) return next(err);
     res.redirect("/events/" + id);
   });
@@ -103,51 +122,67 @@ router.post("/:id/remark", (req, res, next) => {
   });
 });
 
-// All filters
-router.get("/filters", auth.getLocationAndCatageory, (req, res, next) => {
+//filter by catagary
+
+// router.post("/catagery", (req, res, next) => {
+//   //console.log(req.body)
+//   Events.find(req.body, (err, events) => {
+//     console.log(err, events);
+//     Events.distinct("event_category", (err, evs) => {
+//       console.log(evs);
+//       Events.distinct("location", (err, evsa) => {
+//         res.render("events", { events, evs, evsa });
+//       });
+//     });
+//   });
+// });
+
+// //filter by location
+
+// router.post("/location", (req, res, next) => {
+//   //console.log(req.body)
+//   Events.find(req.body, (err, events) => {
+//     console.log(err, events);
+//     Events.distinct("location", (err, evsa) => {
+//       console.log(evsa);
+//       Events.distinct("event_category", (err, evs) => {
+//         res.render("events", { events, evs, evsa });
+//       });
+//     });
+//   });
+// });
+
+// router.post("/date", (req, res, next) => {
+//   console.log(req.body);
+//   var start = req.body.start_date;
+//   var end = req.body.end_date;
+//   Events.find({ start_date: { $gte: start, $lt: end } }, (err, events) => {
+//     // console.log(dataa.start_date)
+//     //console.log(dataa)
+//     // res.render('events' ,{events, evs,evsa})
+//     Events.distinct("location", (err, evsa) => {
+//       console.log(evsa);
+//       Events.distinct("event_category", (err, evs) => {
+//         res.render("events", { events, evs, evsa });
+//       });
+//     });
+//   });
+// });
+
+router.get("/filter", (req, res, next) => {
   var catagery = req.query.event_category;
-  var location = req.query.location;
-  var start_date = req.query.start_date;
-  var end_date = req.query.end_date;
-
-  console.log(catagery, "catageory");
+  console.log(catagery ,"catageory")
   if (catagery) {
-    Events.find({ event_category: catagery }, (err, events) => {
-      // console.log(err, events);
-      if (err) return next(err);
-      res.render("events", { events });
+    Events.find(req.body, (err, events) => {
+      console.log(err, events);
+      Events.distinct("event_category", (err, evs) => {
+        console.log(evs);
+        Events.distinct("location", (err, evsa) => {
+          res.render("events", { events, evs, evsa });
+        });
+      });
     });
-  } else if (location) {
-    Events.find({ location: location }, (err, events) => {
-      // console.log(err, events);
-      if (err) return next(err);
-      res.render("events", { events });
-    });
-  } else if (start_date && end_date) {
-    Events.find(
-      { start_date: { $gte: start_date, $lt: end_date } },
-      (err, events) => {
-        
-        if (err) return next(err);
-        res.render("events", { events });
-      }
-    );
   }
-});
-
-// single event details
-router.get("/:id", (req, res, next) => {
-  var id = req.params.id;
-  Events.findById(id)
-    .populate("remarkID")
-    .exec((err, events) => {
-      var start_date = moment(events.start_date)
-        .format("DD/MM/YYYY")
-        .slice(0, 10);
-      var end_date = moment(events.end_date).format("DD/MM/YYYY").slice(0, 10);
-      if (err) return next(err);
-      res.render("singleEvent", { events, start_date, end_date });
-    });
 });
 
 module.exports = router;

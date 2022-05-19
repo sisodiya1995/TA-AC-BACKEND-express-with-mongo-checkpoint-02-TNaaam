@@ -27,10 +27,10 @@
       </section>
 
       <aside>
-        <form action="/events/filters" method="GET">
+        <form action="/events/filter" method="GET">
           <select name="event_category" id="">
             <option value="">Select</option>
-            <%catageory.forEach((event) => {%>
+            <%evs.forEach((event) => {%>
             <option><%=event%></option>
             <% })%>
           </select>
@@ -38,10 +38,10 @@
           <button type="submit">filter by catagery</button>
         </form>
         <br />
-        <form action="/events/filters" method="GET">
+        <form action="/events/location" method="POST">
           <select name="location" id="">
             <option value="">Select</option>
-            <%location.forEach((event) => {%>
+            <%evsa.forEach((event) => {%>
 
             <option><%=event%></option>
             <% })%>
@@ -49,7 +49,7 @@
           <button type="submit">Filter by location</button>
         </form>
         <br />
-        <form action="/events/filters" method="GET">
+        <form action="/events/date" method="POST">
           <input class="abc" type="date" name="start_date" /> <br /><br />
           <input class="abc" type="date" name="end_date" /> <br /><br />
           <button class="btn2" type="submit">Filter date</button>
